@@ -52,7 +52,7 @@ def winner(letter):
 
 def start():
     global player, movesLeft
-    computer = Computer('O')
+    computer = Computer('O', 'brute force')
     
     print_board()
     print("Input format: row, col (e.g. 1,2)", end='\n\n')
