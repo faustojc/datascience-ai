@@ -6,11 +6,11 @@ class Computer:
         self.bestMove = [-1, -1]
         self.algorithm = algorithm
         random.seed(0)
-        
+
     @staticmethod
     def empty_cells(board = []):
         cells = [[row, col] for row in range(1, 4) for col in range(1, 4) if board[row][col] == '_']
-        
+
         return cells
 
     @staticmethod
@@ -32,12 +32,12 @@ class Computer:
             return True
 
         return False
-        
+
     def brute_force(self, board):
         opponent = 'O' if self.team == 'X' else 'X'
         bestScore = -1000
         bestMove = [-1, -1]
-        
+
         cells = self.empty_cells(board)
         random.shuffle(cells)
 
@@ -75,7 +75,7 @@ class Computer:
             return -1
         elif len(self.empty_cells(board)) == 0:
             return 0
-        
+
         shuffled_cells = self.empty_cells(board)
         random.shuffle(shuffled_cells)
 
@@ -83,43 +83,42 @@ class Computer:
             for cell in shuffled_cells:
                 board[cell[0]][cell[1]] = self.team
                 score = self.minimax(board, depth + 1, False)
-                
+
                 board[cell[0]][cell[1]] = '_'
                 bestScore = max(score, bestScore)
-                
+
             return bestScore
         else:
             for cell in shuffled_cells:
                 board[cell[0]][cell[1]] = opponent
                 score = self.minimax(board, depth + 1, True)
-                
+
                 board[cell[0]][cell[1]] = '_'
                 bestScore = min(score, bestScore)
-                
+
         return bestScore
 
     def find_best_move(self, board):
         bestScore = -1000
-        
+
         for cell in self.empty_cells(board):
             board[cell[0]][cell[1]] = self.team
-            
+
             score = self.minimax(board, 0, False)
-            
+
             board[cell[0]][cell[1]] = '_'
-            
+
             if score > bestScore:
                 bestScore = score
                 self.bestMove = cell
-                
+
 
     def make_move(self, board):
         if self.algorithm.find('brute') != -1:
             self.brute_force(board)
         else:
             self.find_best_move(board)
-        
+
         board[self.bestMove[0]][self.bestMove[1]] = self.team
-        
-        return self.bestMove != None
-    
+
+        return self.bestMove[0] != self.bestMove[1] != -1
