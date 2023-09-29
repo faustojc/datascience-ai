@@ -1,9 +1,11 @@
-def empty_cells(board):
+def empty_cells(board = []):
     cells = []
+    
     for row in range(1, 4):
         for col in range(1, 4):
             if board[row][col] == '_':
                 cells.append([row, col])
+                
     return cells
 
 
@@ -28,16 +30,15 @@ def get_winner(board, player):
 
 
 class Computer:
-    def __init__(self, player):
-        self.player = player
+    def __init__(self, team):
+        self.team = team
+        self.bestMove = None
 
     def minimax(self, board, depth, isMaximizing):
-        if self.player == 'X':
-            opponent = 'O'
-        else:
-            opponent = 'X'
+        opponent = 'O' if self.team == 'X' else 'X'
+        
 
-        if get_winner(board, self.player):
+        if get_winner(board, self.team):
             return 1
         elif get_winner(board, opponent):
             return -1
@@ -46,34 +47,44 @@ class Computer:
 
         if isMaximizing:
             bestScore = -1000
+            
             for cell in empty_cells(board):
-                board[cell[0]][cell[1]] = self.player
+                board[cell[0]][cell[1]] = self.team
                 score = self.minimax(board, depth + 1, False)
+                
                 board[cell[0]][cell[1]] = '_'
                 bestScore = max(score, bestScore)
+                
             return bestScore
         else:
             bestScore = 1000
+            
             for cell in empty_cells(board):
                 board[cell[0]][cell[1]] = opponent
                 score = self.minimax(board, depth + 1, True)
+                
                 board[cell[0]][cell[1]] = '_'
                 bestScore = min(score, bestScore)
+                
             return bestScore
 
     def find_best_move(self, board):
         bestScore = -1000
-        bestMove = None
+        
         for cell in empty_cells(board):
-            board[cell[0]][cell[1]] = self.player
+            board[cell[0]][cell[1]] = self.team
+            
             score = self.minimax(board, 0, False)
+            
             board[cell[0]][cell[1]] = '_'
+            
             if score > bestScore:
                 bestScore = score
-                bestMove = cell
-        return bestMove
+                self.bestMove = cell
+                
 
     def make_move(self, board):
-        move = self.find_best_move(board)
-        board[move[0]][move[1]] = self.player
-        return move
+        self.find_best_move(board)
+        board[self.bestMove[0]][self.bestMove[1]] = self.team
+        
+        return self.bestMove != None

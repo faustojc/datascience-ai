@@ -1,3 +1,5 @@
+from computer import Computer
+
 board = [
     [' ', '1', '2', '3'],
     ['1', '_', '_', '_'],
@@ -50,23 +52,26 @@ def winner(letter):
 
 def start():
     global player, movesLeft
+    computer = Computer('O')
+    
     print_board()
     print("Input format: row, col (e.g. 1,2)", end='\n\n')
 
     while True:
-        if movesLeft == 0:
+        if movesLeft <= 0:
             print('Draw!')
             break
 
         move = input(f'Player {player} (row, col): ')
 
-        if move.isdecimal():
+        try:
+            move = move.split(',')
+            move = [int(x) for x in move]
+        except:
             print('Invalid move. Try again.')
             continue
 
-        move = move.split(',')
-        move = [int(x) for x in move]
-
+        # Player's turn
         if make_move(move, player):
             print_board()
 
@@ -74,8 +79,19 @@ def start():
                 print(f'Player {player} wins!')
                 break
 
-            player = 'X' if player == 'O' else 'O'
+            # player = 'X' if player == 'O' else 'O'
             movesLeft -= 1
+            
+            # Computer's turn
+            if computer.make_move(board):
+                print(f'Computer moves ({computer.bestMove[0]}, {computer.bestMove[1]})')
+                print_board()
+                
+                if winner(computer.team):
+                    print(f'Computer {computer.team} wins!')
+                    break
+                
+                movesLeft -= 1
         else:
             print('Invalid move. Try again.')
 
