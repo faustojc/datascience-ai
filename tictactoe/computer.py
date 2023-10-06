@@ -1,21 +1,22 @@
 import random
 
+
 class Computer:
-    def __init__(self, team, algorithm = 'minimax'):
+    def __init__(self, team, algorithm='minimax'):
         self.team = team
         self.bestMove = [-1, -1]
         self.algorithm = algorithm
         random.seed(0)
 
     @staticmethod
-    def empty_cells(board = []):
+    def empty_cells(board: list[list[str]]):
         cells = [[row, col] for row in range(1, 4) for col in range(1, 4) if board[row][col] == '_']
 
         return cells
 
     @staticmethod
     def get_winner(board, player):
-    # check all rows
+        # check all rows
         for row in range(1, 4):
             if board[row][1] == board[row][2] == board[row][3] == player:
                 return True
@@ -111,7 +112,6 @@ class Computer:
             if score > bestScore:
                 bestScore = score
                 self.bestMove = cell
-
 
     def make_move(self, board):
         if self.algorithm.find('brute') != -1:
