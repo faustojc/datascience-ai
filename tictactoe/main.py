@@ -9,6 +9,7 @@ board = [
 player = 'X'
 movesLeft = 9
 
+
 def print_board():
     for row in board:
         for col in row:
@@ -21,6 +22,7 @@ def print_board():
         else:
             print(end='\n')
 
+
 def make_move(move, letter):
     try:
         if board[move[0]][move[1]] == '_':
@@ -30,6 +32,7 @@ def make_move(move, letter):
         return False
 
     return False
+
 
 def winner(letter):
     # check all rows
@@ -50,10 +53,11 @@ def winner(letter):
 
     return False
 
+
 def start():
     global player, movesLeft
     computer = Computer('O', 'brute force')
-    
+
     print_board()
     print("Input format: row, col (e.g. 1,2)", end='\n\n')
 
@@ -81,16 +85,16 @@ def start():
 
             # player = 'X' if player == 'O' else 'O'
             movesLeft -= 1
-            
+
             # Computer's turn
             if computer.make_move(board):
                 print(f'Computer moves ({computer.bestMove[0]}, {computer.bestMove[1]})')
                 print_board()
-                
+
                 if winner(computer.team):
                     print(f'Computer {computer.team} wins!')
                     break
-                
+
                 movesLeft -= 1
         else:
             print('Invalid move. Try again.')
