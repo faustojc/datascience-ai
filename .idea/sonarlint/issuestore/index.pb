@@ -5,7 +5,5 @@ A
 tictactoe/main.py,1\c\1c94c117bb33276d9930f5156ffa4c34f64fdb52
 I
 thesis/data/fake_data.csv,0\2\02db3ef344871ccb97731eaf2bbf07876f60d05f
->
-thesis/main.py,1\8\18cd82f5dfa17fc6be2f688ef06ccdda2d0dce12
 H
 thesis/train_model.ipynb,c\b\cb38901e592a023eaa55ff6f9c06f5ec2281aae4
