@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\thesis\data\kaggle\data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\thesis\data\kaggle\output.csv">
           <value>
             <Attribute>
