@@ -15,7 +15,7 @@ class Computer:
         return cells
 
     @staticmethod
-    def get_winner(board, player):
+    def get_winner(board: list[list[str]], player: str):
         # check all rows
         for row in range(1, 4):
             if board[row][1] == board[row][2] == board[row][3] == player:
@@ -34,7 +34,7 @@ class Computer:
 
         return False
 
-    def brute_force(self, board):
+    def brute_force(self, board: list[list[str]]):
         opponent = 'O' if self.team == 'X' else 'X'
         bestScore = -1000
         bestMove = [-1, -1]
@@ -65,7 +65,7 @@ class Computer:
         self.bestMove = bestMove
         return bestScore
 
-    def minimax(self, board, depth, isMaximizing):
+    def minimax(self, board: list[list[str]], depth: int, isMaximizing: bool):
         opponent = 'O' if self.team == 'X' else 'X'
         bestScore = -1000 if isMaximizing else 1000
 
@@ -99,7 +99,7 @@ class Computer:
 
         return bestScore
 
-    def find_best_move(self, board):
+    def find_best_move(self, board: list[list[str]]):
         bestScore = -1000
 
         for cell in self.empty_cells(board):
@@ -113,7 +113,8 @@ class Computer:
                 bestScore = score
                 self.bestMove = cell
 
-    def make_move(self, board):
+    def make_move(self, board: list[list[str]]):
+
         if self.algorithm.find('brute') != -1:
             self.brute_force(board)
         else:
