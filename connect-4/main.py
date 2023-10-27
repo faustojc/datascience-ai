@@ -74,11 +74,11 @@ def start():
         try:
             move = int(input(f'Player {player} col (1 to 7): '))
 
-            if 0 >= move >= 8:
-                print('Invalid move!')
+            if move < 1 or move > 7:
+                print('Input must be between 1 and 7!')
                 continue
 
-                # Player's turn
+            # Player's turn
             if make_move(move, player):
                 print_board()
 
