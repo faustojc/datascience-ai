@@ -56,7 +56,7 @@ def winner(letter):
 
 def start():
     global player, movesLeft
-    computer = Computer('O', 'brute force')
+    computer = Computer('O', 'minimax')
 
     print_board()
     print("Input format: row, col (e.g. 1,2)", end='\n\n')
@@ -71,7 +71,7 @@ def start():
         try:
             move = move.split(',')
             move = [int(x) for x in move]
-        except:
+        except ValueError:
             print('Invalid move. Try again.')
             continue
 
