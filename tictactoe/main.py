@@ -33,7 +33,7 @@ class Computer:
         if isMaximizing:
             for cell in self.empty_cells(board):
                 board[cell[0]][cell[1]] = self.team
-                score = self.minimax(board, depth + 1, False)
+                score = self.__minimax(board, depth + 1, False)
 
                 board[cell[0]][cell[1]] = '_'
                 bestScore = max(score, bestScore)
@@ -42,7 +42,7 @@ class Computer:
         else:
             for cell in self.empty_cells(board):
                 board[cell[0]][cell[1]] = opponent
-                score = self.minimax(board, depth + 1, True)
+                score = self.__minimax(board, depth + 1, True)
 
                 board[cell[0]][cell[1]] = '_'
                 bestScore = min(score, bestScore)
@@ -55,7 +55,7 @@ class Computer:
         for cell in self.empty_cells(board):
             board[cell[0]][cell[1]] = self.team
 
-            score = self.minimax(board, 0, False)
+            score = self.__minimax(board, 0, False)
 
             board[cell[0]][cell[1]] = '_'
 
@@ -64,11 +64,11 @@ class Computer:
                 self.best_move = cell
 
     def make_move(self, board: list[list[str]]) -> bool:
-        self.find_best_move(board)
+        self.__find_best_move(board)
 
-        board[self.bestMove[0]][self.bestMove[1]] = self.team
+        board[self.best_move[0]][self.best_move[1]] = self.team
 
-        return self.bestMove[0] != self.bestMove[1] != -1
+        return self.best_move[0] != -1 and self.best_move[1] != -1
 
 
 def print_board():
@@ -140,25 +140,22 @@ def start():
         # Player's turn
         if make_move(move, player):
             print_board()
+            movesLeft -= 1
 
             if winner(player):
                 print(f'Player {player} wins!')
                 break
-
-            movesLeft -= 1
         else:
             print('Invalid move. Try again.')
 
-        # Computer's turn
+		# Computer's turn
         if computer.make_move(board):
             print(f'Computer moves ({computer.best_move[0]}, {computer.best_move[1]})')
             print_board()
+            movesLeft -= 1
 
             if winner(computer.team):
-                print(f'Computer {computer.team} wins!')
-                break
-
-            movesLeft -= 1
+	            print(f'Computer {computer.team} wins!'); break
 
 if __name__ == '__main__':
     start()
